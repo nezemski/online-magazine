@@ -4,11 +4,12 @@ import { Device, DeviceInfo } from "../model/models";
 import ApiError from "../error/ApiError";
 import getDirname from "../utils/getDirname";
 import { json, where } from "sequelize";
+import { info } from "console";
 
 class DeviceController {
   async create(req, res, next) {
     try {
-      const { name, price, brandId, typeId, info: infoJSON } = req.body;
+      let { name, price, brandId, typeId, info: infoJSON } = req.body;
       const { img } = req.files;
       const fileName = uuid() + ".jpg";
       img.mv(
@@ -23,15 +24,15 @@ class DeviceController {
         img: fileName,
       });
 
-      if (infoJSON) {
-        const info = JSON.parse(infoJSON);
-        info.forEach((i) => {
+      if (info) {
+        info = JSON.parse(info);
+        info.forEach((i) =>
           DeviceInfo.create({
             title: i.title,
             description: i.description,
             deviceId: device.id,
-          });
-        });
+          })
+        );
       }
 
       return res.json(device);
@@ -41,7 +42,7 @@ class DeviceController {
   }
 
   async getAll(req, res) {
-    const { typeId, brandId, limit = 1, page = 9 } = req.query;
+    let { typeId, brandId, limit = 1, page = 9 } = req.query;
     let offset = limit * page - limit;
     let devices;
 

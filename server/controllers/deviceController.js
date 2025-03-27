@@ -3,8 +3,6 @@ import { v4 as uuid } from "uuid";
 import { Device, DeviceInfo } from "../model/models";
 import ApiError from "../error/ApiError";
 import getDirname from "../utils/getDirname";
-import { json, where } from "sequelize";
-import { info } from "console";
 
 class DeviceController {
   async create(req, res, next) {
@@ -24,8 +22,8 @@ class DeviceController {
         img: fileName,
       });
 
-      if (info) {
-        info = JSON.parse(info);
+      if (infoJSON) {
+        const info = JSON.parse(infoJSON);
         info.forEach((i) =>
           DeviceInfo.create({
             title: i.title,
@@ -36,13 +34,14 @@ class DeviceController {
       }
 
       return res.json(device);
-    } catch (e) {
-      next(ApiError.badRequest(e.message));
+    } catch (error) {
+      console.error("Error creating device: ", error);
+      next(ApiError.badRequest(error.message));
     }
   }
 
   async getAll(req, res) {
-    let { typeId, brandId, limit = 1, page = 9 } = req.query;
+    let { typeId, brandId, limit = 10, page = 1 } = req.query;
     let offset = limit * page - limit;
     let devices;
 

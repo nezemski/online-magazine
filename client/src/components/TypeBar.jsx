@@ -5,7 +5,6 @@ import ListGroup from "react-bootstrap/ListGroup";
 
 const TypeBar = observer(() => {
   const { device } = useContext(AppContext);
-  console.log(device.selectedType);
 
   return (
     <ListGroup className="mt-2">

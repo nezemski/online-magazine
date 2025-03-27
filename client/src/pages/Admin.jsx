@@ -5,9 +5,9 @@ import CreateDevice from "../components/modals/CreateDevice";
 import CreateType from "../components/modals/CreateType";
 
 const Admin = () => {
-  const [brandVisible, setBrandVisible] = useState();
-  const [typeVisible, setTypeVisible] = useState();
-  const [deviceVisible, setDeviceVisible] = useState();
+  const [brandVisible, setBrandVisible] = useState(false);
+  const [typeVisible, setTypeVisible] = useState(false);
+  const [deviceVisible, setDeviceVisible] = useState(false);
   return (
     <Container className="d-flex flex-column">
       <Button

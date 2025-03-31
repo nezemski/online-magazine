@@ -13,6 +13,7 @@ import { Spinner } from "react-bootstrap";
 const App = observer(() => {
   const { user } = useContext(AppContext);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     setTimeout(() => {
       check()

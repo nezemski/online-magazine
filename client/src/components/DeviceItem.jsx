@@ -5,6 +5,7 @@ import { DEVICE_ROUTE } from "../utils/consts";
 
 const DeviceItem = ({ device }) => {
   const navigate = useNavigate();
+
   return (
     <div>
       <Col md={3} onClick={() => navigate(DEVICE_ROUTE + "/" + device.id)}>
@@ -15,7 +16,7 @@ const DeviceItem = ({ device }) => {
             src={import.meta.env.VITE_API_URL + device.img}
           />
           <div className="text-black-50 mt-1 d-flex justify-content-between align-items-center">
-            <div>Samsung...</div>
+            <div>{device?.brand?.name}</div>
             <div className="d-flex align-items-center">
               <div>{device.rating}</div>
               <Image

@@ -1,6 +1,6 @@
 import path from "path";
 import { v4 as uuid } from "uuid";
-import { Device, DeviceInfo } from "../model/models";
+import { Brand, Device, DeviceInfo } from "../model/models";
 import ApiError from "../error/ApiError";
 import getDirname from "../utils/getDirname";
 
@@ -46,7 +46,11 @@ class DeviceController {
     let devices;
 
     if (!brandId && !typeId) {
-      devices = await Device.findAndCountAll({ limit, offset });
+      devices = await Device.findAndCountAll({
+        limit,
+        offset,
+        include: { model: Brand, as: "brand" },
+      });
     }
 
     if (!brandId && typeId) {
@@ -54,6 +58,7 @@ class DeviceController {
         where: { typeId },
         limit,
         offset,
+        include: { model: Brand, as: "brand" },
       });
     }
 
@@ -62,6 +67,7 @@ class DeviceController {
         where: { brandId },
         limit,
         offset,
+        include: { model: Brand, as: "brand" },
       });
     }
 
@@ -70,6 +76,7 @@ class DeviceController {
         where: { brandId, typeId },
         limit,
         offset,
+        include: { model: Brand, as: "brand" },
       });
     }
 

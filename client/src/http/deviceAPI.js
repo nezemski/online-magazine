@@ -38,16 +38,6 @@ export const fetchDevices = async (typeId, brandId, page, limit = 5) => {
 };
 
 export const fetchOneDevice = async (id) => {
-  const { data } = await $host.get("api/device/" + id);
-  return data;
-};
-
-export const createDeviceBasket = async (deviceBasket) => {
-  const { data } = await $authHost.post("api/basket", deviceBasket);
-  return data;
-};
-
-export const fetchDeviceBasket = async (basketId) => {
-  const { data } = await $authHost.get("api/basket", { params: { basketId } });
+  const { data } = await $authHost.get("api/device/" + id);
   return data;
 };

@@ -1,6 +1,12 @@
 import path from "path";
 import { v4 as uuid } from "uuid";
-import { Brand, Device, DeviceInfo } from "../model/models";
+import {
+  Basket,
+  BasketDevice,
+  Brand,
+  Device,
+  DeviceInfo,
+} from "../model/models";
 import ApiError from "../error/ApiError";
 import getDirname from "../utils/getDirname";
 
@@ -49,7 +55,7 @@ class DeviceController {
       devices = await Device.findAndCountAll({
         limit,
         offset,
-        include: { model: Brand, as: "brand" },
+        include: [{ model: Brand, as: "brand" }],
       });
     }
 
@@ -85,9 +91,20 @@ class DeviceController {
 
   async getOne(req, res) {
     const { id } = req.params;
+    const { id: userId } = req.user;
+    const basket = await Basket.findOne({ where: { userId: userId } });
+
     const device = await Device.findOne({
       where: { id },
-      include: [{ model: DeviceInfo, as: "info" }],
+      include: [
+        { model: DeviceInfo, as: "info" },
+        {
+          model: BasketDevice,
+          as: "basket_devices",
+          where: { basketId: basket.id },
+          required: false,
+        },
+      ],
     });
     return res.json(device);
   }

@@ -25,6 +25,14 @@ class BasketDeviceController {
     });
     return res.json(basketDevice);
   }
+
+  async deleteDeviceBasket(req, res) {
+    const { id } = req.params;
+    const deviceBasket = await BasketDevice.destroy({
+      where: { id },
+    });
+    return res.json(deviceBasket);
+  }
 }
 
 const basketDeviceController = new BasketDeviceController();

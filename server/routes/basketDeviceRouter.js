@@ -7,5 +7,10 @@ const router = new Router();
 
 router.post("/", authMiddleware, basketDeviceController.create);
 router.get("/", authMiddleware, basketDeviceController.getAll);
+router.delete(
+  "/:id",
+  authMiddleware,
+  basketDeviceController.deleteDeviceBasket
+);
 
 export default router;
